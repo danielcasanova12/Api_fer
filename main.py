@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 import sys
 import os
@@ -11,6 +12,15 @@ from resnet_modelv2 import CustomResNet50
 
 # Inicializar FastAPI
 app = FastAPI()
+
+# Configurar CORS para liberar todas as origens
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permitir todas as origens
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos os métodos (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Permitir todos os cabeçalhos
+)
 
 # Definir as classes de emoção
 classes = ['anger', 'contempt', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
