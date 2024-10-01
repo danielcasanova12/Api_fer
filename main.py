@@ -2,16 +2,12 @@ from fastapi import FastAPI, File, UploadFile
 from PIL import Image
 import sys
 import os
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './models/')))
-
-from resnet_modelv2 import CustomResNet50
-
-
-
 import torch
 import torchvision.transforms as transforms
 from io import BytesIO
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), './models/')))
+from resnet_modelv2 import CustomResNet50
 
 # Inicializar FastAPI
 app = FastAPI()
@@ -63,3 +59,7 @@ async def predizer_emocao(file: UploadFile = File(...)):
     # Retornar a emoção predita
     return {"emocao_predita": emocao}
 
+# Rota inicial que retorna o texto "onn"
+@app.get("/")
+async def root():
+    return {"message": "onn"}
